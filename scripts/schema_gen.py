@@ -48,21 +48,27 @@ def parse_address(address: str) -> dict:
     if len(parts) >= 2:
         schema_address["addressLocality"] = parts[1]
 
-    if len(parts) >= 3:
-        # Could be "ON M1A 1A1" or "Ontario" or "ON"
-        prov_postal = parts[2].strip()
-        # Try to split province and postal code
-        match = re.match(r"^([A-Za-z]{2,})\s+([A-Z0-9]{3}\s?[A-Z0-9]{3})$", prov_postal)
-        if match:
-            schema_address["addressRegion"] = match.group(1)
-            schema_address["postalCode"] = match.group(2)
-        else:
-            schema_address["addressRegion"] = prov_postal
+    # Remaining parts: could be Province, PostalCode, Country in various combos
+    remaining = [p.strip() for p in parts[2:]]
+    COUNTRY_MAP = {"canada": "CA", "united states": "US", "usa": "US", "us": "US", "ca": "CA"}
+    POSTAL_RE = re.compile(r"^[A-Z]\d[A-Z]\s?\d[A-Z]\d$|^\d{5}(-\d{4})?$")  # Canadian or US postal
 
-    if len(parts) >= 4:
-        schema_address["addressCountry"] = parts[3].strip()
-    else:
-        # Default to Canada
+    for part in remaining:
+        part_lower = part.lower()
+        if part_lower in COUNTRY_MAP:
+            schema_address["addressCountry"] = COUNTRY_MAP[part_lower]
+        elif POSTAL_RE.match(part.upper()):
+            schema_address["postalCode"] = part.upper()
+        elif "addressRegion" not in schema_address:
+            # Strip postal code from end if combined (e.g. "ON M8Y2C8")
+            m = re.match(r"^([A-Za-z]{2,})\s+([A-Z]\d[A-Z]\s?\d[A-Z]\d|\d{5})$", part)
+            if m:
+                schema_address["addressRegion"] = m.group(1)
+                schema_address["postalCode"] = m.group(2).replace(" ", "")
+            else:
+                schema_address["addressRegion"] = part
+
+    if "addressCountry" not in schema_address:
         schema_address["addressCountry"] = "CA"
 
     return schema_address
