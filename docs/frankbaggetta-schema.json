@@ -1,0 +1,21 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Frank Baggetta",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "22 Fairmar Ave",
+    "addressLocality": "Toronto",
+    "addressRegion": "Ontario",
+    "postalCode": "M8Y2C8",
+    "addressCountry": "CA"
+  },
+  "telephone": "416-892-7161",
+  "url": "https://frankbaggetta.ca",
+  "openingHours": [
+    "Mo-Su 09:00-21:00"
+  ],
+  "description": "Professional accordionist with 55 years of experience. 2nd place World Accordion Competition. Available for weddings, corporate galas, private events and multicultural celebrations across Toronto."
+}
+</script>
