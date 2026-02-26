@@ -153,19 +153,34 @@ def check_directory(directory: dict, name: str, phone: str, mock: bool = False) 
 
     # Directories that require JS or login — mark as manual
     manual_only = {"Apple Maps", "Bing Places", "Nextdoor", "Here WeGo", "Waze",
-                   "Facebook Business", "LinkedIn Company"}
+                   "Facebook Business", "LinkedIn Company", "Foursquare",
+                   "Google Business Profile", "TripAdvisor", "Houzz"}
     if directory["name"] in manual_only:
         return {"name": directory["name"], "url": url, "status": "Check Manually"}
 
     try:
         resp = requests.get(url, headers=HEADERS, timeout=10, allow_redirects=True)
         if resp.status_code == 200:
-            # Case-insensitive name fragment search
-            name_words = name.lower().split()
             page_lower = resp.text.lower()
-            # Check if at least 2 significant words from the name appear on the page
-            matches = sum(1 for word in name_words if len(word) > 3 and word in page_lower)
-            if matches >= min(2, len([w for w in name_words if len(w) > 3])):
+            name_lower = name.lower()
+            # Require the FULL business name to appear on the page as a phrase
+            # Split into first/last for personal names and check both halves appear close together
+            name_parts = name_lower.split()
+            full_name_match = name_lower in page_lower
+            # Also check for last name + city as a stricter signal
+            last_name = name_parts[-1] if name_parts else ""
+            strict_match = full_name_match or (
+                len(name_parts) >= 2
+                and name_parts[0] in page_lower
+                and name_parts[-1] in page_lower
+                # Verify they appear within 100 chars of each other (not coincidental matches)
+                and any(
+                    name_parts[-1] in page_lower[max(0, i - 100):i + 100]
+                    for i in [page_lower.find(name_parts[0])]
+                    if i != -1
+                )
+            )
+            if strict_match:
                 status = "Listed"
             else:
                 status = "Not Found"
