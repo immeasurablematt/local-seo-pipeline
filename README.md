@@ -58,6 +58,48 @@ python scripts/audit.py --domain example.com --name "Test Biz" \
   --keyword "plumber toronto" --city "Toronto" --mock
 ```
 
+### hot_lead_eval.py
+
+Pull a business's info from their Google Maps listing and score it as a potential client.
+
+```bash
+python scripts/hot_lead_eval.py \
+  --name "Joe's Plumbing" \
+  --city "Toronto" \
+  --rating 3.8 \
+  --reviews 12 \
+  --website "https://joesplumbing.com" \
+  --keyword "plumber toronto"
+
+# No website on the GBP listing:
+python scripts/hot_lead_eval.py \
+  --name "Joe's Plumbing" --city "Toronto" \
+  --rating 3.8 --reviews 12
+
+# Mock mode (skip live website fetch):
+python scripts/hot_lead_eval.py --name "Test Biz" --city "Toronto" \
+  --rating 4.1 --reviews 30 --website "https://example.com" --mock
+```
+
+Outputs **HOT / WARM / COLD** with a scored breakdown:
+
+| Signal | Max pts |
+|--------|---------|
+| Review count (≤ 10) | 35 |
+| Rating (< 3.5★) | 20 |
+| No website on GBP | 20 |
+| No LocalBusiness schema | 10 |
+| Keyword missing from `<title>` | 6 |
+| Phone not on homepage | 5 |
+| Keyword missing from `<h1>` | 4 |
+| No viewport meta | 3 |
+
+- **60+** → Hot Lead — pitch the package
+- **35–59** → Warm Lead — worth a call
+- **< 35** → Cold Lead — move on
+
+Discord shortcut: `!hot-lead name='Business' city='Toronto' rating=3.8 reviews=12`
+
 ### citations_check.py
 
 ```bash
