@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evelyn's Sandwich Factory — Welland, ON</title>
+  <meta name="description" content="Real roasted turkey. Fresh homemade sandwiches. 4.9★ on Google. Open Mon–Fri 11am–5pm, Sat 11am–2pm. 15 Niagara St, Welland. (905) 734-9316.">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Evelyn's Sandwich Factory — Welland, ON">
+  <meta property="og:description" content="We roast a turkey every single day. No cold cuts. Ever. Welland's favourite sandwich shop.">
+  <meta property="og:type" content="restaurant">
+
+  <!-- LocalBusiness Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Evelyn's Sandwich Factory",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "15 Niagara Street",
+      "addressLocality": "Welland",
+      "addressRegion": "ON",
+      "postalCode": "L3C 1H8",
+      "addressCountry": "CA"
+    },
+    "telephone": "(905) 734-9316",
+    "url": "https://www.facebook.com/EvelynsSandwichFactory/",
+    "openingHours": ["Mo-Fr 11:00-17:00", "Sa 11:00-14:00"],
+    "priceRange": "$10–$20",
+    "servesCuisine": "Sandwiches",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "341"
+    },
+    "description": "Welland's favourite sandwich shop. We roast a fresh turkey every single day — no cold cuts, ever. Real food made with real care."
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset ──────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #FAF7F0;
+      --cream-mid:  #F2EDE3;
+      --cream-dark: #E4DCCF;
+      --green:      #1E3A2F;
+      --green-mid:  #2D5040;
+      --terra:      #C4602A;
+      --gold:       #D4A034;
+      --ink:        #1A1A18;
+      --ink-mid:    #3D3D3A;
+      --ink-light:  #6B6B67;
+
+      --sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --serif: 'Fraunces', Georgia, serif;
+      --ease: cubic-bezier(0.32, 0.72, 0, 1);
+      --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Floating Nav ───────────────────────── */
+    nav {
+      position: fixed;
+      top: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      width: max-content;
+      max-width: calc(100vw - 2rem);
+    }
+
+    .nav-pill {
+      background: rgba(30, 58, 47, 0.94);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 9999px;
+      padding: 0.6rem 0.6rem 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 0.95rem;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,247,240,0.6);
+      text-decoration: none;
+      transition: color 350ms var(--ease);
+    }
+
+    .nav-links a:hover { color: var(--cream); }
+
+    .nav-cta {
+      background: var(--terra);
+      color: white;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.6rem 1rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      transition: all 400ms var(--ease);
+    }
+
+    .nav-cta:hover { background: #d47240; transform: scale(1.04); }
+
+    .nav-cta-arrow {
+      width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 9999px;
+      background: rgba(255,255,255,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      transition: transform 300ms var(--spring);
+    }
+
+    .nav-cta:hover .nav-cta-arrow { transform: translate(1px, -1px) scale(1.1); }
+
+    /* ── Hero ───────────────────────────────── */
+    .hero {
+      min-height: 100dvh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle warm ambient glow */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -15rem;
+      right: -10rem;
+      width: 55rem;
+      height: 55rem;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(212,160,52,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 8rem 3rem 5.5rem 4.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--cream-mid);
+      border: 1px solid var(--cream-dark);
+      border-radius: 9999px;
+      padding: 0.3rem 0.85rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green);
+      width: fit-content;
+      margin-bottom: 1.75rem;
+    }
+
+    .eyebrow-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 9999px;
+      background: var(--terra);
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 5vw, 5.25rem);
+      font-weight: 300;
+      line-height: 1.06;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--green);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--ink-mid);
+      max-width: 34ch;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: var(--cream);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.85rem 0.85rem 0.85rem 1.4rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      transition: all 500ms var(--ease);
+    }
+
+    .btn-primary:hover { background: var(--green-mid); transform: scale(1.03); }
+
+    .btn-icon {
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 9999px;
+      background: rgba(255,255,255,0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-style: normal;
+      font-size: 0.85rem;
+      transition: transform 350ms var(--spring);
+    }
+
+    .btn-primary:hover .btn-icon { transform: translate(2px, -1px) scale(1.12); }
+
+    .rating-inline {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+      color: var(--ink-light);
+    }
+
+    .stars { color: var(--gold); letter-spacing: -0.04em; }
+
+    /* Hero right: photo */
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Outer photo bezel — double-bezel technique */
+    .photo-shell {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--cream-mid);
+      border: 1px solid var(--cream-dark);
+      border-radius: 2.25rem;
+      padding: 0.45rem;
+      width: 72%;
+      max-width: 400px;
+      aspect-ratio: 3 / 4;
+    }
+
+    .photo-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: calc(2.25rem - 0.25rem);
+      overflow: hidden;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.6);
+    }
+
+    .photo-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 10%;
+    }
+
+    /* Floating badge — "4.9★" card overlapping left edge */
+    .hero-badge {
+      position: absolute;
+      left: calc(28% - 5.5rem);
+      top: 32%;
+      background: var(--green);
+      border-radius: 1.5rem;
+      padding: 1.1rem 1.3rem;
+      color: var(--cream);
+      width: 9.5rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .badge-num {
+      font-family: var(--serif);
+      font-size: 2.25rem;
+      font-weight: 600;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .badge-label {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    .badge-sub {
+      font-size: 0.7rem;
+      opacity: 0.5;
+      margin-top: 0.15rem;
+    }
+
+    /* "Fresh Roasted Daily" pill floating at bottom */
+    .hero-freshpill {
+      position: absolute;
+      bottom: 4rem;
+      left: calc(28% - 3.5rem);
+      background: var(--terra);
+      color: white;
+      border-radius: 9999px;
+      padding: 0.5rem 1.1rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ── Promise ────────────────────────────── */
+    .promise {
+      background: var(--green);
+      color: var(--cream);
+      padding: 8rem 4.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .promise::before {
+      content: '';
+      position: absolute;
+      bottom: -12rem;
+      left: -8rem;
+      width: 40rem;
+      height: 40rem;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(212,160,52,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .promise-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .promise-eyebrow {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(250,247,240,0.4);
+      margin-bottom: 1.25rem;
+    }
+
+    .promise-title {
+      font-family: var(--serif);
+      font-size: clamp(2.25rem, 3.5vw, 3.75rem);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.75rem;
+    }
+
+    .promise-title em { font-style: italic; color: var(--gold); }
+
+    .promise-body {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: rgba(250,247,240,0.7);
+      max-width: 44ch;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .stat-shell {
+      background: rgba(250,247,240,0.05);
+      border: 1px solid rgba(250,247,240,0.1);
+      border-radius: 1.75rem;
+      padding: 0.35rem;
+      transition: all 500ms var(--ease);
+    }
+
+    .stat-shell:hover {
+      background: rgba(250,247,240,0.09);
+      transform: translateY(-2px);
+    }
+
+    .stat-inner {
+      background: rgba(250,247,240,0.03);
+      border-radius: calc(1.75rem - 0.2rem);
+      padding: 1.6rem 1.5rem;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 3rem;
+      font-weight: 600;
+      line-height: 1;
+      color: var(--cream);
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,247,240,0.45);
+    }
+
+    /* ── Menu ───────────────────────────────── */
+    .menu {
+      padding: 8rem 4.5rem;
+    }
+
+    .menu-inner { max-width: 1300px; margin: 0 auto; }
+
+    .section-hd {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+    }
+
+    .section-title em { font-style: italic; color: var(--green); }
+
+    /* Asymmetric bento grid */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.25rem;
+    }
+
+    /* Card shells — outer bezel */
+    .card-shell {
+      border-radius: 2rem;
+      padding: 0.4rem;
+      transition: all 600ms var(--ease);
+    }
+
+    .card-shell:hover { transform: translateY(-3px); }
+
+    .card-shell.light {
+      background: var(--cream-mid);
+      border: 1px solid var(--cream-dark);
+    }
+
+    .card-shell.light:hover {
+      box-shadow: 0 24px 64px -12px rgba(30,58,47,0.1);
+    }
+
+    .card-shell.dark {
+      background: rgba(30,58,47,0.92);
+      border: 1px solid rgba(30,58,47,0.5);
+    }
+
+    .card-shell.dark:hover {
+      box-shadow: 0 24px 64px -12px rgba(30,58,47,0.35);
+    }
+
+    /* Card inner core */
+    .card {
+      border-radius: calc(2rem - 0.25rem);
+      padding: 2rem 2rem 2.25rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .card-shell.light .card {
+      background: var(--cream);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+
+    .card-shell.dark .card {
+      background: var(--green);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .span-7 { grid-column: span 7; }
+    .span-5 { grid-column: span 5; }
+    .span-4 { grid-column: span 4; }
+    .span-8 { grid-column: span 8; }
+
+    .card-emoji { font-size: 2.25rem; margin-bottom: 0.25rem; }
+
+    .card-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      border-radius: 9999px;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+
+    .card-shell.light .card-chip {
+      background: var(--cream-mid);
+      border: 1px solid var(--cream-dark);
+      color: var(--terra);
+    }
+
+    .card-shell.dark .card-chip {
+      background: rgba(250,247,240,0.1);
+      border: 1px solid rgba(250,247,240,0.12);
+      color: rgba(250,247,240,0.75);
+    }
+
+    .card-name {
+      font-family: var(--serif);
+      font-size: clamp(1.3rem, 1.8vw, 1.9rem);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      line-height: 1.1;
+    }
+
+    .card-shell.light .card-name { color: var(--ink); }
+    .card-shell.dark .card-name  { color: var(--cream); }
+
+    .card-desc {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      max-width: 38ch;
+    }
+
+    .card-shell.light .card-desc { color: var(--ink-light); }
+    .card-shell.dark .card-desc  { color: rgba(250,247,240,0.65); }
+
+    .card-price {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-top: auto;
+      padding-top: 0.5rem;
+    }
+
+    .card-shell.light .card-price { color: var(--green); }
+    .card-shell.dark .card-price  { color: var(--gold); }
+
+    /* ── Visit ──────────────────────────────── */
+    .visit {
+      padding: 8rem 4.5rem;
+      background: var(--cream-mid);
+    }
+
+    .visit-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .visit-col { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .info-shell {
+      background: var(--cream);
+      border: 1px solid var(--cream-dark);
+      border-radius: 1.5rem;
+      padding: 1.5rem 1.75rem;
+    }
+
+    .info-label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 0.65rem;
+    }
+
+    .info-value {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    .info-value a {
+      color: var(--green);
+      text-decoration: none;
+      transition: color 300ms var(--ease);
+    }
+
+    .info-value a:hover { color: var(--green-mid); }
+
+    .hours-list { display: flex; flex-direction: column; gap: 0; }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+
+    .hours-row:last-child { border-bottom: none; }
+
+    .hours-day { font-weight: 500; color: var(--ink); }
+    .hours-time { color: var(--green); font-weight: 600; font-size: 0.83rem; }
+    .hours-closed { color: var(--ink-light); font-size: 0.83rem; }
+
+    /* Map double-bezel */
+    .map-shell {
+      background: var(--cream);
+      border: 1px solid var(--cream-dark);
+      border-radius: 2.25rem;
+      padding: 0.45rem;
+      height: 440px;
+    }
+
+    .map-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: calc(2.25rem - 0.25rem);
+      overflow: hidden;
+    }
+
+    .map-inner iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    /* ── Footer ─────────────────────────────── */
+    footer {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 4.5rem 4.5rem 3rem;
+    }
+
+    .footer-inner { max-width: 1300px; margin: 0 auto; }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(250,247,240,0.08);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 1.9rem;
+      font-weight: 300;
+      letter-spacing: -0.015em;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-tag {
+      font-size: 0.82rem;
+      color: rgba(250,247,240,0.45);
+      line-height: 1.6;
+      max-width: 28ch;
+    }
+
+    .footer-cols {
+      display: flex;
+      gap: 4rem;
+      flex-shrink: 0;
+    }
+
+    .footer-col h4 {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(250,247,240,0.35);
+      margin-bottom: 1rem;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .footer-col a {
+      font-size: 0.85rem;
+      color: rgba(250,247,240,0.65);
+      text-decoration: none;
+      transition: color 300ms var(--ease);
+    }
+
+    .footer-col a:hover { color: var(--cream); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.73rem;
+      color: rgba(250,247,240,0.3);
+    }
+
+    /* ── Scroll reveal ───────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(2.5rem);
+      transition: opacity 850ms var(--ease), transform 850ms var(--ease);
+    }
+
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* Hero entry animations */
+    .a1 { animation: fadeUp 800ms 100ms var(--ease) both; }
+    .a2 { animation: fadeUp 900ms 260ms var(--ease) both; }
+    .a3 { animation: fadeUp 900ms 420ms var(--ease) both; }
+    .a4 { animation: fadeUp 900ms 580ms var(--ease) both; }
+    .a5 { animation: fadeUp 1000ms 320ms var(--ease) both; }
+    .a6 { animation: fadeUp 900ms 560ms var(--ease) both; }
+    .a7 { animation: fadeUp 900ms 700ms var(--ease) both; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(1.75rem); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Mobile ─────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: unset;
+      }
+
+      .hero-right {
+        height: 60dvh;
+        order: -1;
+      }
+
+      .photo-shell {
+        right: 1.25rem;
+        bottom: 1rem;
+        width: 62%;
+      }
+
+      .hero-badge { display: none; }
+      .hero-freshpill { left: auto; right: calc(62% + 1.5rem); bottom: 2rem; font-size: 0.6rem; }
+
+      .hero-left {
+        padding: 3rem 1.5rem 4.5rem;
+        justify-content: flex-start;
+      }
+
+      .promise { padding: 5rem 1.5rem; }
+      .promise-inner { grid-template-columns: 1fr; gap: 3.5rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .menu { padding: 5rem 1.5rem; }
+      .menu-grid { display: flex; flex-direction: column; }
+
+      .visit { padding: 5rem 1.5rem; }
+      .visit-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .map-shell { height: 300px; }
+
+      footer { padding: 4rem 1.5rem 2.5rem; }
+      .footer-top { flex-direction: column; gap: 2.5rem; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+
+      .nav-links { display: none; }
+      .nav-pill { padding: 0.55rem 0.55rem 0.55rem 1.25rem; gap: 1rem; }
+
+      .section-hd { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ──────────────────────────────────── -->
+<nav aria-label="Main navigation">
+  <div class="nav-pill">
+    <span class="nav-logo">Evelyn's Sandwich Factory</span>
+    <ul class="nav-links" role="list">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#visit">Visit Us</a></li>
+    </ul>
+    <a href="tel:9057349316" class="nav-cta" aria-label="Call us at 905 734 9316">
+      Call to Order
+      <span class="nav-cta-arrow" aria-hidden="true">↗</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ── Hero ─────────────────────────────────── -->
+<section class="hero" aria-label="Welcome">
+
+  <div class="hero-left">
+    <div class="eyebrow a1" aria-hidden="true">
+      <span class="eyebrow-dot"></span>
+      Welland's Favourite Sandwich Shop
+    </div>
+
+    <h1 class="hero-title a2">
+      Real Turkey.<br>
+      <em>Real Love.</em><br>
+      Real Welland.
+    </h1>
+
+    <p class="hero-sub a3">
+      We roast a fresh turkey every single day. No cold cuts.
+      No shortcuts. Just the sandwich you'll be thinking about tomorrow.
+    </p>
+
+    <div class="hero-actions a4">
+      <a href="tel:9057349316" class="btn-primary">
+        (905) 734-9316
+        <span class="btn-icon" aria-hidden="true">📞</span>
+      </a>
+      <div class="rating-inline" aria-label="4.9 stars on Google, 341 reviews">
+        <span class="stars" aria-hidden="true">★★★★★</span>
+        <strong>4.9</strong>
+        <span>· 341 Google reviews</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right" aria-hidden="true">
+    <!-- Photo — double-bezel -->
+    <div class="photo-shell a5">
+      <div class="photo-inner">
+        <img src="evelyn.jpg" alt="Evelyn, founder of Evelyn's Sandwich Factory, Welland ON" loading="eager">
+      </div>
+    </div>
+
+    <!-- Floating badge -->
+    <div class="hero-badge a6">
+      <div class="badge-num">4.9★</div>
+      <div class="badge-label">Google Rating</div>
+      <div class="badge-sub">341 reviews</div>
+    </div>
+
+    <!-- Fresh pill -->
+    <div class="hero-freshpill a7">Fresh Roasted Daily</div>
+  </div>
+</section>
+
+<!-- ── The Promise ───────────────────────────── -->
+<section class="promise" aria-label="Our promise">
+  <div class="promise-inner">
+
+    <div class="reveal">
+      <div class="promise-eyebrow">Our Promise</div>
+      <h2 class="promise-title">
+        No cold cuts.<br>
+        <em>Not ever.</em>
+      </h2>
+      <p class="promise-body">
+        Every morning, a fresh turkey goes into the oven. By the time we open at 11am it's
+        carved and ready — real roasted meat, the way it should be. That standard was set
+        on day one and it isn't changing.
+      </p>
+    </div>
+
+    <div class="stats-grid reveal">
+      <div class="stat-shell">
+        <div class="stat-inner">
+          <div class="stat-num">4.9</div>
+          <div class="stat-label">Stars on Google</div>
+        </div>
+      </div>
+      <div class="stat-shell">
+        <div class="stat-inner">
+          <div class="stat-num">341</div>
+          <div class="stat-label">Happy Reviews</div>
+        </div>
+      </div>
+      <div class="stat-shell">
+        <div class="stat-inner">
+          <div class="stat-num">1</div>
+          <div class="stat-label">Turkey Roasted Every Day</div>
+        </div>
+      </div>
+      <div class="stat-shell">
+        <div class="stat-inner">
+          <div class="stat-num">$0</div>
+          <div class="stat-label">Cold Cuts Used. Ever.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Menu ──────────────────────────────────── -->
+<section class="menu" id="menu" aria-label="Our menu">
+  <div class="menu-inner">
+
+    <div class="section-hd reveal">
+      <div>
+        <div class="section-eyebrow">What We Make</div>
+        <h2 class="section-title">The <em>good stuff</em></h2>
+      </div>
+    </div>
+
+    <div class="menu-grid" role="list">
+
+      <!-- Turkey — hero card, dark, large -->
+      <div class="card-shell dark span-7 reveal" role="listitem">
+        <div class="card">
+          <div class="card-emoji" aria-hidden="true">🦃</div>
+          <div class="card-chip">⭐ Most Loved</div>
+          <h3 class="card-name">Fresh Roasted<br>Turkey Sandwich</h3>
+          <p class="card-desc">
+            Carved from a turkey roasted fresh this morning. Loaded onto your choice of bread
+            with crisp vegetables and all the fixings. The one everyone raves about.
+          </p>
+          <div class="card-price">From $10</div>
+        </div>
+      </div>
+
+      <!-- Roast Beef -->
+      <div class="card-shell light span-5 reveal" role="listitem">
+        <div class="card">
+          <div class="card-emoji" aria-hidden="true">🥩</div>
+          <div class="card-chip">Classic</div>
+          <h3 class="card-name">Roast Beef<br>on Vienna</h3>
+          <p class="card-desc">
+            Tender roast beef piled on Vienna bread, finished with savoury gravy and fresh toppings.
+          </p>
+          <div class="card-price">From $10</div>
+        </div>
+      </div>
+
+      <!-- Soup -->
+      <div class="card-shell light span-4 reveal" role="listitem">
+        <div class="card">
+          <div class="card-emoji" aria-hidden="true">🍲</div>
+          <div class="card-chip">Homemade</div>
+          <h3 class="card-name">Split Pea &amp;<br>Ham Soup</h3>
+          <p class="card-desc">
+            Made from scratch every day. Hearty, warming, and the perfect companion.
+          </p>
+          <div class="card-price">Ask inside</div>
+        </div>
+      </div>
+
+      <!-- Custom Sub -->
+      <div class="card-shell light span-8 reveal" role="listitem">
+        <div class="card">
+          <div class="card-emoji" aria-hidden="true">🥖</div>
+          <div class="card-chip">Build Your Own</div>
+          <h3 class="card-name">Custom Sub</h3>
+          <p class="card-desc">
+            Your sub, your way. Choose from our freshly roasted meats, a full lineup of
+            vegetables, condiments, and breads. Every combination works when the
+            ingredients are this good.
+          </p>
+          <div class="card-price">From $10</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Visit ─────────────────────────────────── -->
+<section class="visit" id="visit" aria-label="Visit us">
+  <div class="visit-inner">
+
+    <div class="visit-col">
+      <div class="reveal">
+        <div class="section-eyebrow">Find Us</div>
+        <h2 class="section-title" style="margin-bottom: 2rem;">Come <em>say hello</em></h2>
+      </div>
+
+      <div class="info-shell reveal">
+        <div class="info-label">Address</div>
+        <div class="info-value">
+          <a href="https://maps.app.goo.gl/RT1Bx3M2QXT41rYQA" target="_blank" rel="noopener">
+            15 Niagara Street<br>Welland, ON &nbsp;L3C 1H8
+          </a>
+        </div>
+      </div>
+
+      <div class="info-shell reveal">
+        <div class="info-label">Phone</div>
+        <div class="info-value">
+          <a href="tel:9057349316">(905) 734-9316</a>
+        </div>
+      </div>
+
+      <div class="info-shell reveal">
+        <div class="info-label">Hours</div>
+        <div class="hours-list" role="list">
+          <div class="hours-row" role="listitem">
+            <span class="hours-day">Monday – Friday</span>
+            <span class="hours-time">11:00 am – 5:00 pm</span>
+          </div>
+          <div class="hours-row" role="listitem">
+            <span class="hours-day">Saturday</span>
+            <span class="hours-time">11:00 am – 2:00 pm</span>
+          </div>
+          <div class="hours-row" role="listitem">
+            <span class="hours-day">Sunday</span>
+            <span class="hours-closed">Closed</span>
+          </div>
+        </div>
+      </div>
+
+      <a href="tel:9057349316" class="btn-primary reveal" style="width: fit-content;">
+        Call to Order
+        <span class="btn-icon" aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <!-- Map double-bezel -->
+    <div class="map-shell reveal" aria-label="Map to Evelyn's Sandwich Factory">
+      <div class="map-inner">
+        <iframe
+          title="Evelyn's Sandwich Factory — 15 Niagara Street, Welland ON"
+          src="https://maps.google.com/maps?q=15+Niagara+Street+Welland+Ontario&t=&z=16&ie=UTF8&iwloc=&output=embed"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Evelyn's Sandwich Factory</div>
+        <div class="footer-tag">Fresh roasted turkey every day.<br>No cold cuts. Ever.</div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Visit</h4>
+          <ul role="list">
+            <li><a href="https://maps.app.goo.gl/RT1Bx3M2QXT41rYQA" target="_blank" rel="noopener">15 Niagara St, Welland</a></li>
+            <li><a href="tel:9057349316">(905) 734-9316</a></li>
+            <li><span style="color:rgba(250,247,240,0.4); font-size:0.83rem;">Mon–Fri 11am–5pm</span></li>
+            <li><span style="color:rgba(250,247,240,0.4); font-size:0.83rem;">Sat 11am–2pm</span></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul role="list">
+            <li><a href="https://www.facebook.com/EvelynsSandwichFactory/" target="_blank" rel="noopener">Facebook</a></li>
+            <li><a href="https://maps.app.goo.gl/RT1Bx3M2QXT41rYQA" target="_blank" rel="noopener">Google Maps</a></li>
+            <li><a href="https://www.yelp.ca/biz/evelyns-sandwich-factory-welland" target="_blank" rel="noopener">Yelp</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Evelyn's Sandwich Factory — Welland, Ontario.</span>
+      <span>Take-out only &nbsp;·&nbsp; Mon–Fri 11am–5pm &nbsp;·&nbsp; Sat 11am–2pm</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal — IntersectionObserver, never window.scroll
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('in'), i * 70);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

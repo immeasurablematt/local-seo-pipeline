@@ -1,0 +1,22 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Evelyn's Sandwich Factory",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "15 Niagara Street",
+    "addressLocality": "Welland",
+    "addressRegion": "ON",
+    "postalCode": "L3C1H8",
+    "addressCountry": "CA"
+  },
+  "telephone": "(905) 734-9316",
+  "url": "https://www.facebook.com/EvelynsSandwichFactory/",
+  "openingHours": [
+    "Mo-Fr 11:00-17:00",
+    "Sa 11:00-14:00"
+  ],
+  "description": "Welland's favourite sandwich shop. We roast a fresh turkey every single day \u2014 no cold cuts, ever. Real food made with real care."
+}
+</script>
