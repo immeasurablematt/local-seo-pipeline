@@ -28,6 +28,8 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).parent
 AUDIT_SCRIPT = REPO_ROOT / "scripts" / "audit.py"
 HOT_LEAD_SCRIPT = REPO_ROOT / "scripts" / "hot_lead_eval.py"
+MARKET_INTEL_SCRIPT = REPO_ROOT / "scripts" / "market_intel.py"
+COPY_GEN_SCRIPT = REPO_ROOT / "scripts" / "copy_gen.py"
 
 # Load DataForSEO creds from keychain at runtime
 CREDENTIAL_LOADER = Path("/Users/bob/.openclaw/workspace/load-all-credentials.sh")
@@ -210,12 +212,47 @@ def format_hot_lead_response(params: dict, output: str, error: str | None) -> st
     return response
 
 
+def run_market_intel(params: dict) -> tuple[str, str | None]:
+    """Run market_intel.py with parsed params."""
+    cmd = [sys.executable, str(MARKET_INTEL_SCRIPT), "--keyword", params["keyword"]]
+    if params.get("city"):
+        cmd.extend(["--city", params["city"]])
+    if params.get("mock"):
+        cmd.append("--mock")
+    # Pass any manually specified competitors
+    for c in params.get("competitors", []):
+        cmd.extend(["--competitor", c])
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
+        if result.returncode == 0:
+            return result.stdout, None
+        return result.stdout, result.stderr or "market_intel returned non-zero."
+    except subprocess.TimeoutExpired:
+        return "", "market_intel timed out."
+    except Exception as e:
+        return "", str(e)
+
+
+def format_market_intel_response(params: dict, output: str, error: str | None) -> str:
+    """Format !market-intel output for Discord."""
+    keyword = params.get("keyword", "unknown")
+    if error:
+        return f"❌ `!market-intel` failed for `{keyword}`:\n```\n{error[:500]}\n```"
+    lines = output.strip().splitlines()
+    block = "\n".join(l for l in lines if l.strip())
+    response = f"**Market Intel — {keyword}**\n```\n{block[:1500]}\n```"
+    if len(response) > 1900:
+        response = response[:1897] + "..."
+    return response
+
+
 def print_usage():
     print("""Usage:
   python discord_trigger.py "!seo-audit domain=example.com name='Business Name' address='123 Main St, Toronto, ON' phone='416-555-1234' keyword='plumber toronto'"
   python discord_trigger.py "!hot-lead name='Joe Plumbing' city='Toronto' rating=3.8 reviews=12 website='https://example.com' keyword='plumber toronto'"
+  python discord_trigger.py "!market-intel keyword='plumber toronto' city='Toronto'"
 
-Optional for both:
+Optional for all:
   --mock        Skip live requests (for testing)
 """)
 
@@ -226,6 +263,20 @@ def main():
         sys.exit(1)
 
     command_str = " ".join(sys.argv[1:])
+
+    if "!market-intel" in command_str:
+        cmd = re.sub(r"^!market-intel\s*", "", command_str.strip())
+        params = parse_command("!seo-audit " + cmd)
+        params["mock"] = "--mock" in command_str
+
+        if not params.get("keyword"):
+            print("❌ !market-intel requires at least keyword=")
+            print_usage()
+            sys.exit(1)
+
+        output, error = run_market_intel(params)
+        print(format_market_intel_response(params, output, error))
+        return
 
     if "!hot-lead" in command_str:
         cmd = re.sub(r"^!hot-lead\s*", "", command_str.strip())
