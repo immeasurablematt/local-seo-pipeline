@@ -240,7 +240,14 @@ def main():
     if onpage["error"]:
         print(f"   ⚠️  Fetch error: {onpage['error']}")
 
-    # 3. Write to Sheets
+    # 3. Save competitors to .competitors.json for market_intel.py
+    if competitors:
+        competitors_with_city = [dict(c, city=args.city) for c in competitors]
+        competitors_file = REPO_ROOT / ".competitors.json"
+        competitors_file.write_text(json.dumps(competitors_with_city, indent=2))
+        print(f"\n💾 Saved competitors → {competitors_file.name}")
+
+    # 4. Write to Sheets
     if sheets_id:
         today = date.today().isoformat()
         issues = []

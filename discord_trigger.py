@@ -1,16 +1,23 @@
 #!/usr/bin/env python3
 """
-discord_trigger.py — Handler for the !seo-audit Discord command.
+discord_trigger.py — Handler for Discord SEO commands.
 
-OpenClaw calls this script when it detects !seo-audit in #code or #localseo.
-Parses the command, runs audit.py, and returns a formatted Discord response.
+OpenClaw calls this script when it detects a command in #code or #localseo.
 
-Command format:
+Commands:
+    !seo-audit   — full audit of a domain
+    !hot-lead    — score a GBP listing as a potential client (Hot/Warm/Cold)
+
+!seo-audit format:
     !seo-audit domain=example.com name='Business Name' address='123 Main St, Toronto, ON' phone='416-555-1234' keyword='plumber toronto'
 
+!hot-lead format:
+    !hot-lead name='Joe Plumbing' city='Toronto' rating=3.8 reviews=12 website='https://example.com' keyword='plumber toronto'
+    !hot-lead name='Joe Plumbing' city='Toronto' rating=3.8 reviews=12   (no website listed)
+
 Direct usage:
-    python discord_trigger.py "!seo-audit domain=example.com name='Test Biz' address='1 Test St, Toronto, ON' phone='416-555-1234' keyword='plumber toronto'"
-    python discord_trigger.py "!seo-audit domain=example.com name='Test Biz' address='1 Test St' phone='555-0000' keyword='plumber toronto' --mock"
+    python discord_trigger.py "!seo-audit ..."
+    python discord_trigger.py "!hot-lead name='Joe Plumbing' city='Toronto' rating=3.8 reviews=12"
 """
 
 import re
@@ -20,6 +27,9 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent
 AUDIT_SCRIPT = REPO_ROOT / "scripts" / "audit.py"
+HOT_LEAD_SCRIPT = REPO_ROOT / "scripts" / "hot_lead_eval.py"
+MARKET_INTEL_SCRIPT = REPO_ROOT / "scripts" / "market_intel.py"
+COPY_GEN_SCRIPT = REPO_ROOT / "scripts" / "copy_gen.py"
 
 # Load DataForSEO creds from keychain at runtime
 CREDENTIAL_LOADER = Path("/Users/bob/.openclaw/workspace/load-all-credentials.sh")
@@ -154,13 +164,96 @@ def format_discord_response(params: dict, audit_output: str, error: str | None) 
     return response
 
 
+def run_hot_lead(params: dict) -> tuple[str, str | None]:
+    """Run hot_lead_eval.py with parsed params."""
+    cmd = [
+        sys.executable, str(HOT_LEAD_SCRIPT),
+        "--name", params["name"],
+        "--city", params.get("city", ""),
+    ]
+    if params.get("rating"):
+        cmd.extend(["--rating", str(params["rating"])])
+    if params.get("reviews"):
+        cmd.extend(["--reviews", str(params["reviews"])])
+    if params.get("website"):
+        cmd.extend(["--website", params["website"]])
+    if params.get("keyword"):
+        cmd.extend(["--keyword", params["keyword"]])
+    if params.get("mock"):
+        cmd.append("--mock")
+    if params.get("sheets_id"):
+        cmd.extend(["--sheets-id", params["sheets_id"]])
+
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        if result.returncode == 0:
+            return result.stdout, None
+        return result.stdout, result.stderr or "hot_lead_eval returned non-zero."
+    except subprocess.TimeoutExpired:
+        return "", "hot_lead_eval timed out."
+    except Exception as e:
+        return "", str(e)
+
+
+def format_hot_lead_response(params: dict, output: str, error: str | None) -> str:
+    """Format !hot-lead output for Discord."""
+    name = params.get("name", "unknown")
+    if error:
+        return f"❌ `!hot-lead` failed for `{name}`:\n```\n{error[:500]}\n```"
+
+    lines = output.strip().splitlines()
+    verdict_line = next((l for l in lines if any(v in l for v in ("HOT LEAD", "WARM LEAD", "COLD LEAD"))), "")
+    score_line = next((l for l in lines if "score" in l.lower()), "")
+
+    block = "\n".join(l for l in lines if l.strip())
+    response = f"**Lead Eval — {name}**\n```\n{block[:1500]}\n```"
+    if len(response) > 1900:
+        response = response[:1897] + "..."
+    return response
+
+
+def run_market_intel(params: dict) -> tuple[str, str | None]:
+    """Run market_intel.py with parsed params."""
+    cmd = [sys.executable, str(MARKET_INTEL_SCRIPT), "--keyword", params["keyword"]]
+    if params.get("city"):
+        cmd.extend(["--city", params["city"]])
+    if params.get("mock"):
+        cmd.append("--mock")
+    # Pass any manually specified competitors
+    for c in params.get("competitors", []):
+        cmd.extend(["--competitor", c])
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
+        if result.returncode == 0:
+            return result.stdout, None
+        return result.stdout, result.stderr or "market_intel returned non-zero."
+    except subprocess.TimeoutExpired:
+        return "", "market_intel timed out."
+    except Exception as e:
+        return "", str(e)
+
+
+def format_market_intel_response(params: dict, output: str, error: str | None) -> str:
+    """Format !market-intel output for Discord."""
+    keyword = params.get("keyword", "unknown")
+    if error:
+        return f"❌ `!market-intel` failed for `{keyword}`:\n```\n{error[:500]}\n```"
+    lines = output.strip().splitlines()
+    block = "\n".join(l for l in lines if l.strip())
+    response = f"**Market Intel — {keyword}**\n```\n{block[:1500]}\n```"
+    if len(response) > 1900:
+        response = response[:1897] + "..."
+    return response
+
+
 def print_usage():
     print("""Usage:
   python discord_trigger.py "!seo-audit domain=example.com name='Business Name' address='123 Main St, Toronto, ON' phone='416-555-1234' keyword='plumber toronto'"
+  python discord_trigger.py "!hot-lead name='Joe Plumbing' city='Toronto' rating=3.8 reviews=12 website='https://example.com' keyword='plumber toronto'"
+  python discord_trigger.py "!market-intel keyword='plumber toronto' city='Toronto'"
 
-Optional:
-  --mock        Skip API calls (for testing)
-  city=Toronto  Override city detection (defaults to last word of keyword)
+Optional for all:
+  --mock        Skip live requests (for testing)
 """)
 
 
@@ -171,8 +264,35 @@ def main():
 
     command_str = " ".join(sys.argv[1:])
 
+    if "!market-intel" in command_str:
+        cmd = re.sub(r"^!market-intel\s*", "", command_str.strip())
+        params = parse_command("!seo-audit " + cmd)
+        params["mock"] = "--mock" in command_str
+
+        if not params.get("keyword"):
+            print("❌ !market-intel requires at least keyword=")
+            print_usage()
+            sys.exit(1)
+
+        output, error = run_market_intel(params)
+        print(format_market_intel_response(params, output, error))
+        return
+
+    if "!hot-lead" in command_str:
+        cmd = re.sub(r"^!hot-lead\s*", "", command_str.strip())
+        params = parse_command("!seo-audit " + cmd)  # reuse parser
+        params["mock"] = "--mock" in command_str
+
+        if not params.get("name") or not params.get("city"):
+            print("❌ !hot-lead requires at least name= and city=")
+            print_usage()
+            sys.exit(1)
+
+        output, error = run_hot_lead(params)
+        print(format_hot_lead_response(params, output, error))
+        return
+
     if "!seo-audit" not in command_str:
-        # Allow running without the prefix for convenience
         command_str = "!seo-audit " + command_str
 
     params = parse_command(command_str)
@@ -187,7 +307,6 @@ def main():
 
     output, error = run_audit(params)
     response = format_discord_response(params, output, error)
-
     print(response)
 
 
