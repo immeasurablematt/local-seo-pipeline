@@ -1,0 +1,17 @@
+# Runtime output files
+.reviews_raw.json
+.strengths.json
+.market_intel.json
+.copy_skeleton.md
+.competitors.json
+.sheets_id
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Env
+.env
